@@ -224,34 +224,39 @@
 					<xs:documentation xml:lang="en">Native Hawaiian or Pacific Islander</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="White" id="_3.04.5" type="hmis:noYesMissing">
+			<xs:element name="MidEstNAfrican" id="_3.04.5" type="hmis:noYesMissing">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Middle Eastern or North African</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="White" id="_3.04.6" type="hmis:noYesMissing">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">White</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RaceNone" id="_3.04.6" type="hmis:raceGenderNone" minOccurs="0">
+			<xs:element name="RaceNone" id="_3.04.7" type="hmis:raceGenderNone" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Race None</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Ethnicity" id="_3.05.1" type="hmis:ethnicity">
+			<xs:element name="Ethnicity" id="_3.04.8" type="hmis:noYesMissing">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Ethnicity</xs:documentation>
+					<xs:documentation xml:lang="en">Hispanic/Latina/e/o</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Female" id="_3.06.1.1" type="hmis:noYesMissing">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Female</xs:documentation>
+					<xs:documentation xml:lang="en">Woman (Girl if child)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Male" id="_3.06.1.2" type="hmis:noYesMissing">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Male</xs:documentation>
+					<xs:documentation xml:lang="en">Man (Boy if child)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="NoSingleGender" id="_3.06.1.3" type="hmis:noYesMissing">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">A gender other than singularly female or male (e.g., non-binary, genderfluid, agender, culturally specific gender)</xs:documentation>
+					<xs:documentation xml:lang="en">Non-Binary</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Transgender" id="_3.06.1.4" type="hmis:noYesMissing">
@@ -264,7 +269,17 @@
 					<xs:documentation xml:lang="en">Questioning</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="GenderNone" id="_3.06.1.6" type="hmis:raceGenderNone" minOccurs="0">
+			<xs:element name="CulturallySpecifc" id="_3.06.1.6" type="hmis:noYesMissing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Culturally Specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DifferentIdentity" id="_3.06.1.7" type="hmis:string100" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Different Identity: </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GenderNone" id="_3.06.1.8" type="hmis:raceGenderNone" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Gender None</xs:documentation>
 				</xs:annotation>
@@ -279,10 +294,11 @@
 		<!--Testing correct use of NoSingleGender-->
 		<xs:assert test="
 			if (hmis:NoSingleGender/text()='1')
-				then ((hmis:Female/text()='0' or hmis:Female/text()='99') and (hmis:Male/text()='0' or hmis:Male/text()='99')
-					or (hmis:Female/text()='1' and hmis:Male/text()='1'))
+				then ((hmis:Female/text()='0' or hmis:Female/text()='99') and (hmis:Male/text()='0' or hmis:Male/text()='99') and (hmis:CulturallySpecifc/text()='0' or hmis:CulturallySpecifc/text()='99')
+					or (hmis:Female/text()='1' and hmis:Male/text()='1') and and hmis:CulturallySpecifc/text()='1'))
 			else if (hmis:NoSingleGender/text()='0')
-					then ((hmis:Female/text()='1' and hmis:Male/text()='0') or (hmis:Female/text()='0' and hmis:Male/text()='1'))
+					then ((hmis:Female/text()='1' and hmis:Male/text()='0' and hmis:CulturallySpecifc/text()='0') or (hmis:Female/text()='0'and hmis:CulturallySpecifc/text()='0' and hmis:Male/text()='1') 
+					or (hmis:Female/text()='0'and hmis:CulturallySpecifc/text()='1' and hmis:Male/text()='0'))
 			else if (hmis:NoSingleGender/text()='99')
 					then true()
 			else false()"
@@ -290,9 +306,10 @@
 		<!--Testing if all race values are are 0 or 99, before requiring use of RaceNone-->
 		<xs:assert test="
 			if (hmis:RaceNone) 
-				then ((hmis:AmIndAKNative/text()='0' or hmis:AmIndAKNative/text()='99') and (hmis:Asian/text()='0' or hmis:Asian/text()='99') and (hmis:BlackAfAmerican/text()='0' or hmis:BlackAfAmerican/text()='99') and (hmis:NativeHIPacific/text()='0' or hmis:NativeHIPacific/text()='99') and (hmis:White/text()='0' or hmis:White/text()='99')) 
+				then ((hmis:AmIndAKNative/text()='0' or hmis:AmIndAKNative/text()='99') and (hmis:Asian/text()='0' or hmis:Asian/text()='99') and (hmis:BlackAfAmerican/text()='0' or hmis:BlackAfAmerican/text()='99') 
+					and (hmis:NativeHIPacific/text()='0' or hmis:NativeHIPacific/text()='99') and (hmis:MidEstNAfrican/text()='0' or hmis:MidEstNAfrican/text()='99') or (hmis:White/text()='0' or hmis:White/text()='99')) 
 			else 
-				if (hmis:AmIndAKNative/text()='1' or hmis:Asian/text()='1' or hmis:BlackAfAmerican/text()='1' or hmis:NativeHIPacific/text()='1' or hmis:White/text()='1')
+				if (hmis:AmIndAKNative/text()='1' or hmis:Asian/text()='1' or hmis:BlackAfAmerican/text()='1' or hmis:NativeHIPacific/text()='1' or hmis:MidEstNAfrican/text()='1' or hmis:White/text()='1')
 					then true()
 			else false()"/>
 
@@ -687,7 +704,7 @@
 				</xs:enumeration>
 				<xs:enumeration value="9">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">Client refused</xs:documentation>
+						<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 					</xs:annotation>
 				</xs:enumeration>
 				<xs:enumeration value="99">
@@ -709,13 +726,13 @@
 			<xs:element name="EnrollmentID" type="hmis:enrollmentID"/>
 			<xs:element name="DomesticViolenceVictim" id="_4.11.2" type="hmis:noYesDoesntKnowRefused" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Domestic Violence Victim/Survivor</xs:documentation>
+					<xs:documentation xml:lang="en">Survivor of Domestic Violence</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="WhenOccurred" id="_4.11.A" type="hmis:whenOccurred" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">When experience occurred</xs:documentation>
-					<!--If Yes for “Domestic Violence Victim/Survivor”-->
+					<!--If Yes for “Survivor of Domestic Violence”-->
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CurrentlyFleeing" id="_4.11.B" type="hmis:noYesDoesntKnowRefused" minOccurs="0">
@@ -866,7 +883,11 @@
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute ref="hmis:dataCollectionStage" use="required"/>
+		<!-- <xs:attribute ref="hmis:dataCollectionStage" use="required"/> -->
+		<xs:restriction base="xs:unsignedInt">
+			<xs: enumeration value = "1">
+			</xs: enumeration>
+		<xs:restriction>
 		<xs:attribute ref="hmis:informationDate" use="required"/>
 		<xs:attributeGroup ref="hmis:baseMetaData"/>
 	</xs:complexType>
@@ -879,11 +900,6 @@
 				</xs:annotation>
 			</xs:element>				
 			<xs:element name="EnrollmentID" type="hmis:enrollmentID"/>
-			<xs:element name="WorstHousingSituation" id="_U1.1" type="hmis:noYesDoesntKnowRefused">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Worst Housing Situation</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:sequence>
 		<xs:attributeGroup ref="hmis:baseMetaData"/>
 	</xs:complexType>
@@ -995,7 +1011,7 @@
 					<xs:documentation xml:lang="en">Household Income as a Percentage of AMI</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LastPermanentStreet" id="_V5.1" type="hmis:string100" minOccurs="0">
+			<!-- <xs:element name="LastPermanentStreet" id="_V5.1" type="hmis:string100" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Street Address</xs:documentation>
 				</xs:annotation>
@@ -1014,12 +1030,12 @@
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Zip Code</xs:documentation>
 				</xs:annotation>
-			</xs:element>
-			<xs:element name="AddressDataQuality" id="_V5.5" type="hmis:addressDataQuality" minOccurs="0">
+			</xs:element> -->
+			<!-- <xs:element name="AddressDataQuality" id="_V5.5" type="hmis:addressDataQuality" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Address Data Quality</xs:documentation>
 				</xs:annotation>
-			</xs:element>
+			</xs:element> -->
 			<xs:element name="VAMCStation" id="_V6.1" type="hmis:vamcStation" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">VAMC Station Number</xs:documentation>
@@ -1042,17 +1058,17 @@
 			</xs:element>
 			<xs:element name="LiteralHomelessHistory" id="_V7.C" type="hmis:literalHomelessHistory" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">History of literal homelessness (street/shelter/transitional housing)</xs:documentation>
+					<xs:documentation xml:lang="en">Past experience of homelessness (street/shelter/transitional housing)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ClientLeaseholder" id="_V7.D" type="hmis:noYesMissing" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Client is a current leaseholder.</xs:documentation>
+					<xs:documentation>Head of Household is not a current leaseholder/rent of unit.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="HOHLeaseholder" id="_V7.E" type="hmis:noYesMissing" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Has head of household (HoH) ever been a leaseholder?</xs:documentation>
+					<xs:documentation>Has head of household (HoH) never been a leaseholder?</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SubsidyAtRisk" id="_V7.F" type="hmis:noYesMissing" minOccurs="0">
@@ -1097,7 +1113,7 @@
 			</xs:element>
 			<xs:element name="SingleParent" id="_V7.N" type="hmis:noYesMissing" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Single parent household with minor child(ren)</xs:documentation>
+					<xs:documentation xml:lang="en">Single parent/guardian household with minor child(ren)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DependentUnder6" id="_V7.O" type="hmis:dependentUnder6" minOccurs="0">
@@ -1311,7 +1327,7 @@
 			</xs:element>
 			<xs:element name="CounselingReceived" id="_R18.1" type="hmis:noYesMissing" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Counseling received by client</xs:documentation>
+					<xs:documentation xml:lang="en">Client received counseling</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndividualCounseling" id="_R18.A.1" type="hmis:noYesMissing" minOccurs="0">
@@ -1648,7 +1664,7 @@
 			</xs:element>
 			<xs:element name="VAMedicalServices" id="_4.04.6" type="hmis:noYesMissing" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Veteran’s Administration (VA) Medical Services</xs:documentation>
+					<xs:documentation xml:lang="en">Veteran’s Health Administration (VHA)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="NoVAMedReason" id="_4.04.6A" type="hmis:reasonNotInsuredOrAssisted" minOccurs="0">
@@ -2184,11 +2200,11 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EnrollmentID" type="hmis:enrollmentID"/>
-			<xs:element name="HIVAIDSAssistance" id="_W3.2" type="hmis:noYesDoesntKnowRefused">
+			<!-- <xs:element name="HIVAIDSAssistance" id="_W3.2" type="hmis:noYesDoesntKnowRefused">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Receiving Public HIV/AIDS Medical Assistance</xs:documentation>
 				</xs:annotation>
-			</xs:element>
+			</xs:element> -->
 			<xs:element name="NoHIVAIDSAssistanceReason" id="_W3.A" type="hmis:reasonNotInsuredOrAssisted" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Reason</xs:documentation>
@@ -2374,11 +2390,11 @@
 					<xs:documentation xml:lang="en">Affiliated with a residential project</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TrackingMethod" id="_2.02.C" type="hmis:trackingMethod" minOccurs="0">		
+			<!-- <xs:element name="TrackingMethod" id="_2.02.C" type="hmis:trackingMethod" minOccurs="0">		
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Emergency Shelter Tracking Method</xs:documentation>
 				</xs:annotation>
-			</xs:element>
+			</xs:element> -->
 			<xs:element name="PITCount" type="xs:nonNegativeInteger" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Not in the FY2022 HMIS Data Dictionary.  Used for the HIC; a count of active clients on the date of the PIT Count.</xs:documentation>
@@ -2389,9 +2405,14 @@
 					<xs:documentation xml:lang="en">Housing Type</xs:documentation>
 				</xs:annotation>			
 			</xs:element>
-			<xs:element name="HMISParticipatingProject" id="_2.02.7" type="hmis:noYesMissing">
+			<!-- <xs:element name="HMISParticipatingProject" id="_2.02.7" type="hmis:noYesMissing">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">HMIS Participating Project</xs:documentation>
+				</xs:annotation>
+			</xs:element> -->
+			<xs:element name="HMISParticipationStatus" id="_2.02.7" type="hmis:noYesMissing">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">HMIS Participation Status</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TargetPopulation" id="_2.02.8" type="hmis:targetPopulation" minOccurs="0" >		
@@ -2603,7 +2624,7 @@
 				</xs:enumeration>
 				<xs:enumeration value="12">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">Post-natal care for mother</xs:documentation>
+						<xs:documentation xml:lang="en">Post-natal care for client (person who gave birth)</xs:documentation>
 					</xs:annotation>
 				</xs:enumeration>
 				<xs:enumeration value="13">
@@ -2758,7 +2779,7 @@
 				</xs:enumeration>
 				<xs:enumeration value="7">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">Extended Shallow Subsidy</xs:documentation>
+						<xs:documentation xml:lang="en">Shallow Subsidy</xs:documentation>
 					</xs:annotation>
 				</xs:enumeration>
 				<xs:enumeration value="8">
@@ -2833,12 +2854,22 @@
 				</xs:enumeration>
 				<xs:enumeration value="15">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">Extended Shallow Subsidy – Rental Assistance</xs:documentation>
+						<xs:documentation xml:lang="en"> Shallow Subsidy – Financial Assistance</xs:documentation>
 					</xs:annotation>
 				</xs:enumeration>
 				<xs:enumeration value="16">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Food assistance</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="17">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Landlord Incentive</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="18">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Client Incentive</xs:documentation>
 					</xs:annotation>
 				</xs:enumeration>
 			</xs:restriction>
@@ -2978,7 +3009,7 @@
 				</xs:enumeration>
 				<xs:enumeration value="12">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">Substance use disorder services/treatment</xs:documentation>
+						<xs:documentation xml:lang="en">Substance use services/treatment</xs:documentation>
 					</xs:annotation>
 				</xs:enumeration>
 				<xs:enumeration value="13">
@@ -3603,7 +3634,7 @@
 		<xs:attributeGroup ref="hmis:baseMetaData"/>
 	</xs:complexType>
 
-	<xs:complexType name="wellbeing">
+	<!-- <xs:complexType name="wellbeing">
 		<xs:sequence>
 			<xs:element name="WellbeingID" type="hmis:string32">
 				<xs:annotation>
@@ -3635,7 +3666,7 @@
 		<xs:attribute ref="hmis:dataCollectionStage" use="required"/>
 		<xs:attribute ref="hmis:informationDate" use="required"/>
 		<xs:attributeGroup ref="hmis:baseMetaData"/>
-	</xs:complexType>
+	</xs:complexType> -->
 
 	<xs:complexType name="youthEducationStatus">
 		<xs:sequence>
@@ -3774,7 +3805,7 @@
 			</xs:enumeration>				
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -3789,22 +3820,22 @@
 		<xs:restriction base="xs:unsignedInt">
 			<xs:enumeration value="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">$0 (i.e., not employed, not receiving cash benefits, no other current income)</xs:documentation>
+					<xs:documentation xml:lang="en">30% or less of Area Median Income (AMI) for household size</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="1">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">1-14% of Area Median Income (AMI) for household size</xs:documentation>
+					<xs:documentation xml:lang="en">31-50% of AMI for household size</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="2">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">15-30% of AMI for household size</xs:documentation>
+					<xs:documentation xml:lang="en">51-80% of AMI for household size</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="3">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">More than 30% of AMI for household size</xs:documentation>
+					<xs:documentation xml:lang="en">More than 80% of AMI for household size</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -3834,7 +3865,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4105,7 +4136,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4150,7 +4181,7 @@
 			</xs:enumeration>				
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4185,7 +4216,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4295,7 +4326,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4325,7 +4356,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4430,7 +4461,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4669,11 +4700,11 @@
 					<xs:documentation xml:lang="en">HUD: ESG – Street Outreach</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="12">
+			<!---<xs:enumeration value="12">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">HUD: Rural Housing Stability Assistance Program</xs:documentation>
 				</xs:annotation>
-			</xs:enumeration>
+			</xs:enumeration> -->
 			<xs:enumeration value="13">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">HUD: HOPWA – Hotel/Motel Vouchers</xs:documentation>
@@ -4831,12 +4862,12 @@
 			</xs:enumeration>
 			<xs:enumeration value="48">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">HUD: HOPWA – CV</xs:documentation>
+					<xs:documentation xml:lang="en">HUD: ESG RUSH</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="49">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">HUD: CoC – Joint Component RRH/PSH</xs:documentation>
+					<xs:documentation xml:lang="en">HUD: HOPWA – CV</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="50">
@@ -4876,7 +4907,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -4951,7 +4982,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5027,7 +5058,7 @@
 			</xs:enumeration>				
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5126,7 +5157,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="10">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client died</xs:documentation>
+					<xs:documentation xml:lang="en">Deceased</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="8">
@@ -5136,7 +5167,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5281,7 +5312,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5351,7 +5382,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="10">
@@ -5376,7 +5407,7 @@
 		<xs:restriction base="xs:unsignedInt">
 			<xs:enumeration value="1">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Emergency shelter, including hotel or motel paid for with emergency shelter voucher, or RHY-funded Host Home shelter</xs:documentation>
+					<xs:documentation xml:lang="en">Emergency shelter, including hotel or motel paid for with emergency shelter voucher, or Host Home shelter</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="2">
@@ -5416,7 +5447,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="10">
@@ -5594,6 +5625,11 @@
 					<xs:documentation xml:lang="en">Coast Guard</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Space Force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="8">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Client doesn’t know</xs:documentation>
@@ -5601,7 +5637,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>			
 			<xs:enumeration value="99">
@@ -5686,7 +5722,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5758,7 +5794,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5788,7 +5824,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5828,7 +5864,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -5873,7 +5909,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
@@ -5988,12 +6024,12 @@
 			</xs:enumeration>
 			<xs:enumeration value="2">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Youth voluntarily left early</xs:documentation>
+					<xs:documentation xml:lang="en">Client voluntarily left early</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="3">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Youth was expelled or otherwise involuntarily discharged from project</xs:documentation>
+					<xs:documentation xml:lang="en">Client was expelled or otherwise involuntarily discharged from project</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
@@ -6012,7 +6048,7 @@
 		<xs:restriction base="xs:unsignedInt">
 			<xs:enumeration value="1">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Emergency Shelter</xs:documentation>
+					<xs:documentation xml:lang="en">Emergency Shelter E/E</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="2">
@@ -6075,6 +6111,11 @@
 					<xs:documentation xml:lang="en">Coordinated Entry</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Emergency Shelter Night-by-Night</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -6087,7 +6128,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -6227,7 +6268,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -6317,7 +6358,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -6422,7 +6463,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -6477,7 +6518,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>			
 			<xs:enumeration value="99">
@@ -6704,7 +6745,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>			
 			<xs:enumeration value="99">
@@ -6719,7 +6760,7 @@
 		<xs:restriction base="xs:unsignedInt">
 			<xs:enumeration value="1">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">DV Domestic Violence victims</xs:documentation>
+					<xs:documentation xml:lang="en">Survivors of Domestic Violence</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="3">
@@ -7536,7 +7577,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -7581,7 +7622,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">
@@ -7621,7 +7662,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="9">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Client refused</xs:documentation>
+					<xs:documentation xml:lang="en">Client prefers not to answer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="99">

@@ -754,7 +754,7 @@
 			</xs:element>
 		</xs:sequence>
 		<xs:attribute ref="hmis:dataCollectionStage" use="required"/>
-		<xs:attribute ref="hmis:informationDate" use="required"/>
+		<xs:attribute ref="hmis:informationDate" id="_4.11.1" use="required"/>
 		<xs:attributeGroup ref="hmis:baseMetaData"/>
 	</xs:complexType>
 

@@ -7,7 +7,7 @@
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	vc:minVersion="1.1" version="v1.0.0-rc.3" elementFormDefault="qualified" attributeFormDefault="qualified">
+	vc:minVersion="1.1" version="v1.0.0-rc.4" elementFormDefault="qualified" attributeFormDefault="qualified">
 	<xs:annotation>
 		<xs:documentation>All data elements referenced with an "id" attribute correspond to that same data element id within the FY2024 HMIS Data Dictionary (sans the "_" prefix).</xs:documentation>
 	</xs:annotation>
@@ -754,7 +754,11 @@
 			</xs:element>
 		</xs:sequence>
 		<xs:attribute ref="hmis:dataCollectionStage" use="required"/>
-		<xs:attribute ref="hmis:informationDate" id="_4.11.1" use="required"/>
+		<xs:attribute ref="hmis:informationDate" id="_4.11.1" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Information Date (date information was collected) ([date field])</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attributeGroup ref="hmis:baseMetaData"/>
 	</xs:complexType>
 

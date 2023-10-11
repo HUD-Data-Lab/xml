@@ -7,7 +7,7 @@
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	vc:minVersion="1.1" version="v1.0.0-rc.5" elementFormDefault="qualified" attributeFormDefault="qualified">
+	vc:minVersion="1.1" version="v1.0.0-rc.6" elementFormDefault="qualified" attributeFormDefault="qualified">
 	<xs:annotation>
 		<xs:documentation>All data elements referenced with an "id" attribute correspond to that same data element id within the FY2024 HMIS Data Dictionary (sans the "_" prefix).</xs:documentation>
 	</xs:annotation>
@@ -831,7 +831,7 @@
 					<xs:documentation xml:lang="en">Relationship to Head of Household</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EnrollmentCoC" id="_3.16.1" type="hmis:string6">
+			<xs:element name="EnrollmentCoC" id="_3.16.1" type="hmis:string6"  minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">HUD assigned CoC code for the client’s location at project start. Must match a record in hmis:ProjectCoC with the same hmis:ProjectID ^[A-Za-z]{2}-(0-9){3}$</xs:documentation>
 				</xs:annotation>
@@ -4817,7 +4817,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="436">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">Emergency Housing Voucher</xs:documentation>
+					<xs:documentation xml:lang="en">Housing Stability Voucher</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="437">

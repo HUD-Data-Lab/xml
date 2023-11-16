@@ -7,7 +7,7 @@
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	vc:minVersion="1.1" version="v1.0.0-rc.6" elementFormDefault="qualified" attributeFormDefault="qualified">
+	vc:minVersion="1.1" version="v1.0.0-rc.7" elementFormDefault="qualified" attributeFormDefault="qualified">
 	<xs:annotation>
 		<xs:documentation>All data elements referenced with an "id" attribute correspond to that same data element id within the FY2024 HMIS Data Dictionary (sans the "_" prefix).</xs:documentation>
 	</xs:annotation>
@@ -56,22 +56,22 @@
 					<xs:documentation xml:lang="en">Date of assessment</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AssessmentLocation" id="_4.19.2" type="hmis:string250">
+			<xs:element name="AssessmentLocation" id="_4.19.2" type="hmis:string250" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Assessment location [drop down]</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AssessmentType" id="_4.19.3" type="hmis:assessmentType">
+			<xs:element name="AssessmentType" id="_4.19.3" type="hmis:assessmentType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Assessment Type</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AssessmentLevel" id="_4.19.4" type="hmis:assessmentLevel">
+			<xs:element name="AssessmentLevel" id="_4.19.4" type="hmis:assessmentLevel" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Assessment Level</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PrioritizationStatus" id="_4.19.7" type="hmis:prioritizationStatus">
+			<xs:element name="PrioritizationStatus" id="_4.19.7" type="hmis:prioritizationStatus" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Prioritization Status</xs:documentation>
 				</xs:annotation>
@@ -1494,7 +1494,7 @@
 					<xs:documentation xml:lang="en">If other specify</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="GrantID" id="_2.06.2" type="hmis:string32">
+			<xs:element name="GrantID" id="_2.06.2" type="hmis:string32" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Grant Identifier</xs:documentation>
 				</xs:annotation>
@@ -1919,7 +1919,7 @@
 					<xs:documentation xml:lang="en">Reference to the Inventory's unique ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ProjectCoCID" type="hmis:string32"/>
+			<xs:element name="ProjectCoCID" type="hmis:string32" minOccurs="0"/>
 			<xs:element name="InventoryStartDate" id="_2.07.1" type="xs:date">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Inventory start date</xs:documentation>
@@ -3263,7 +3263,7 @@
 						<xs:documentation xml:lang="en">Continuum Code - HUD-assigned CoC codes for the project location</xs:documentation>
 					</xs:annotation>
 			</xs:element>
-			<xs:element name="Geocode" id="_2.03.2" type="hmis:geocode">
+			<xs:element name="Geocode" id="_2.03.2" type="hmis:geocode" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Geocode</xs:documentation>
 				</xs:annotation>
